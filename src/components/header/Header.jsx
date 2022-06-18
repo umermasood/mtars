@@ -1,27 +1,27 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
-import './header.scss';
+import "./header.scss";
 
-import logo from '../../assets/tmovie.png';
+// import logo from '../../assets/tmovie.png';
 
 const headerNav = [
   {
-    display: 'Home',
-    path: '/',
+    display: "Home",
+    path: "/",
   },
   {
-    display: 'Movies',
-    path: '/movie',
+    display: "Movies",
+    path: "/movie",
   },
   {
-    display: 'Wishlist',
-    path: '/wishlist',
+    display: "Wishlist",
+    path: "/wishlist",
   },
   {
-    display: 'Login',
-    path: '/login',
+    display: "Login",
+    path: "/login",
   },
 ];
 
@@ -37,14 +37,14 @@ const Header = () => {
         document.body.scrollTop > 100 ||
         document.documentElement.scrollTop > 100
       ) {
-        headerRef.current.classList.add('shrink');
+        headerRef.current.classList.add("shrink");
       } else {
-        headerRef.current.classList.remove('shrink');
+        headerRef.current.classList.remove("shrink");
       }
     };
-    window.addEventListener('scroll', shrinkHeader);
+    window.addEventListener("scroll", shrinkHeader);
     return () => {
-      window.removeEventListener('scroll', shrinkHeader);
+      window.removeEventListener("scroll", shrinkHeader);
     };
   }, []);
 
@@ -57,7 +57,7 @@ const Header = () => {
         </div>
         <ul className='header__nav'>
           {headerNav.map((e, i) => (
-            <li key={i} className={`${i === active ? 'active' : ''}`}>
+            <li key={i} className={`${i === active ? "active" : ""}`}>
               <Link to={e.path}>{e.display}</Link>
             </li>
           ))}

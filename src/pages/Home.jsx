@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { OutlineButton } from '../components/button/Button';
-import HeroSlide from '../components/hero-slide/HeroSlide';
-import MovieList from '../components/movie-list/MovieList';
+import { OutlineButton } from "../components/button/Button";
+import HeroSlide from "../components/hero-slide/HeroSlide";
+import MovieList from "../components/movie-list/MovieList";
 
-import { category, movieType, tvType } from '../api/tmdbApi';
+import { category, movieType } from "../api/tmdbApi";
 
 const Home = () => {
   return (

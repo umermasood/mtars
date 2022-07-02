@@ -14,3 +14,4 @@ yarn-error.log*
 .npm/
 venv
 __pycache__
+tweets/

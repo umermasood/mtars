@@ -2,6 +2,7 @@
 #                              FLASK BACKEND
 # ---------------------------------------------------------------------------- #
 import os
+import pandas as pd
 from flask import Flask, request
 from tmdb import fetch_trending_movies
 from twitterapi import fetch_tweets_and_store
@@ -24,8 +25,14 @@ def get_mtars_rating():
     """
     movie_name = request.args.get('movie', type=str)
 
+    df = pd.read_csv('./ratings.csv', index_col=0)
+    try:
+        rating = df.loc[movie_name]['rating']
+    except KeyError:
+        rating = 0.0
+
     # Here we will return the MTARS Rating for the movie
-    return {'response': f'{movie_name} rating'}
+    return {'response': f'{rating}'}
 
 
 # ---------------------------------------------------------------------------- #

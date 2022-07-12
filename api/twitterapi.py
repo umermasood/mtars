@@ -85,7 +85,7 @@ def fetch_tweets_and_store(movies: list, request_count: int) -> None:
     for movie in movies:
         print('Fetching tweets for :', movie)
         # query_params for the first request without next_token
-        query_params = {'query': f'"{movie}" lang:en', 'max_results': '100'}
+        query_params = {'query': f'"{movie}" -is:retweet -is:quote -is:reply lang:en', 'max_results': '100'}
 
         # Make first request for the movie and fetch it's next_token
         next_token = fetch_tweets_from_api(query_params, movie)
@@ -97,9 +97,7 @@ def fetch_tweets_and_store(movies: list, request_count: int) -> None:
                 break
             else:
                 # different query param for next_token query
-                query_params = {'query': f'"{movie}" lang:en',
-                                'max_results': '100', 'next_token': next_token}
-
+                query_params = {'query': f'"{movie}" -is:retweet -is:quote -is:reply lang:en', 'max_results': '100', 'next_token': next_token}
                 next_token = fetch_tweets_from_api(query_params, movie)
 
         # For every movie make ```request_count``` no of API requests

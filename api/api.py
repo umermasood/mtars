@@ -2,11 +2,13 @@
 #                              FLASK BACKEND
 # ---------------------------------------------------------------------------- #
 import os
+import re
 import pandas as pd
 from flask import Flask, request
 from tmdb import fetch_trending_movies
 from twitterapi import fetch_tweets_and_store
 from preprocess import remove_duplicate_tweets
+from calculateSentiment import calculate_sentiment
 from apscheduler.schedulers.background import BackgroundScheduler
 
 ITERATION_COUNT = 0
@@ -40,15 +42,30 @@ def get_mtars_rating():
 # ---------------------------------------------------------------------------- #
 def backend_iteration():
     trending_movies = fetch_trending_movies()
-    print(trending_movies)
+    # Valid trending movie names
+    movies = []
+    regexp = re.compile(r'[A-Z]')
+
+    for movie in trending_movies:
+        if bool(regexp.match(movie)):
+            movies.append(movie)
+    # Print trending movies
+    print(movies)
 
     # For each movie, pull tweets from the Twitter API
-    fetch_tweets_and_store(trending_movies, request_count=10)
+    fetch_tweets_and_store(movies, request_count=10)
 
     # At this point, raw data have been fetched for every trending movie
 
     # For every movie, remove duplicates from the raw data
-    remove_duplicate_tweets(trending_movies)
+    print('Removing duplicates')
+    remove_duplicate_tweets(movies)
+
+    # Perform sentiment analysis of all tweets of every movie
+    print('Calculating sentiment')
+    calculate_sentiment(movies)
+
+    # upon user's api request, return sentiment result of the requested movie
 
     global ITERATION_COUNT
     ITERATION_COUNT += 1

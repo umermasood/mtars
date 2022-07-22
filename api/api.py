@@ -4,7 +4,7 @@
 import os
 import re
 import pandas as pd
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from tmdb import fetch_trending_movies
 from twitterapi import fetch_tweets_and_store
 from preprocess import remove_duplicate_tweets
@@ -27,14 +27,16 @@ def get_mtars_rating():
     """
     movie_name = request.args.get('movie', type=str)
 
-    df = pd.read_csv('./ratings.csv', index_col=0)
-    try:
-        rating = df.loc[movie_name]['rating']
-    except KeyError:
-        rating = 0.0
+    df = pd.read_csv('ratings.csv', header=None, index_col=0)
+    df.columns = ['pos', 'neg']
+
+    sentiment = df.loc[movie_name]
+
+    rating = {'pos': int(sentiment.pos), 'neg': int(sentiment.neg)}
+    print(rating)
 
     # Here we will return the MTARS Rating for the movie
-    return {'response': f'{rating}'}
+    return {'response': rating}
 
 
 # ---------------------------------------------------------------------------- #
@@ -53,7 +55,7 @@ def backend_iteration():
     print(movies)
 
     # For each movie, pull tweets from the Twitter API
-    fetch_tweets_and_store(movies, request_count=10)
+    # fetch_tweets_and_store(movies, request_count=10)
 
     # At this point, raw data have been fetched for every trending movie
 
@@ -64,8 +66,6 @@ def backend_iteration():
     # Perform sentiment analysis of all tweets of every movie
     print('Calculating sentiment')
     calculate_sentiment(movies)
-
-    # upon user's api request, return sentiment result of the requested movie
 
     global ITERATION_COUNT
     ITERATION_COUNT += 1
@@ -80,9 +80,9 @@ def backend_iteration():
 if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=backend_iteration,
-                      trigger="interval", minutes=60)
+                      trigger="interval", minutes=3500)
     scheduler.start()
-    backend_iteration()
+    # backend_iteration()
 
 
 # ---------------------------------------------------------------------------- #

@@ -73,7 +73,8 @@ const Detail = () => {
                   ))}
               </div>
               <p className='overview'>{item.overview}</p>
-              <p>Rating: {mtarsRating ? mtarsRating.response : ''}</p>
+              <p>Positive Ratings: {mtarsRating ? mtarsRating.response.pos : ''}</p>
+              <p>Negative Ratings: {mtarsRating ? mtarsRating.response.neg : ''}</p>
               <div className='cast'>
                 <div className='section__header'>
                   <h2>Casts</h2>

@@ -1,4 +1,5 @@
 import pandas as pd
+from setRatings import set_ratings
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
@@ -33,5 +34,9 @@ def calculate_sentiment(movies: list):
             sentiment_col = pd.Series(data=sentiments, dtype=str)
             df['sentiment'] = sentiment_col
             df.to_csv(f'tweets/{filename}.csv', mode='w+', index=None, header=None)
+
+            ratings = sentiment_col.value_counts().to_dict()
+            # update ratings
+            set_ratings(movie, ratings)
         except FileNotFoundError:
             continue

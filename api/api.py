@@ -27,7 +27,7 @@ def index():
 # ---------------------------------------------------------------------------- #
 #                              RATING ENDPOINT
 # ---------------------------------------------------------------------------- #
-@app.route('/mtarsrating', methods=['GET'])
+@app.route('/api/mtarsrating', methods=['GET'])
 def get_mtars_rating():
     """
     Accepts a movie name as an argument and returns its MTARS rating

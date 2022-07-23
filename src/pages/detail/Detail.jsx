@@ -27,7 +27,7 @@ const Detail = () => {
     getDetail();
 
     const getMTARSRating = async () => {
-      let query = '/mtarsrating?movie=' + item.title;
+      let query = '/api/mtarsrating?movie=' + item.title;
       const response = await fetch(query);
       const jsonData = await response.json();
       setMtarsRating(jsonData);

@@ -51,29 +51,29 @@ def get_mtars_rating():
 #                              BACKEND ITERATION
 # ---------------------------------------------------------------------------- #
 def backend_iteration():
-    trending_movies = fetch_trending_movies()
-    # Valid trending movie names
-    movies = []
-    regexp = re.compile(r'[A-Z]')
-
-    for movie in trending_movies:
-        if bool(regexp.match(movie)):
-            movies.append(movie)
-    # Print trending movies
-    print(movies)
-
-    # For each movie, pull tweets from the Twitter API
-    # fetch_tweets_and_store(movies, request_count=10)
-
-    # At this point, raw data have been fetched for every trending movie
-
-    # For every movie, remove duplicates from the raw data
-    print('Removing duplicates')
-    remove_duplicate_tweets(movies)
-
-    # Perform sentiment analysis of all tweets of every movie
-    print('Calculating sentiment')
-    calculate_sentiment(movies)
+    # trending_movies = fetch_trending_movies()
+    # # Valid trending movie names
+    # movies = []
+    # regexp = re.compile(r'[A-Z]')
+    #
+    # for movie in trending_movies:
+    #     if bool(regexp.match(movie)):
+    #         movies.append(movie)
+    # # Print trending movies
+    # print(movies)
+    #
+    # # For each movie, pull tweets from the Twitter API
+    # # fetch_tweets_and_store(movies, request_count=10)
+    #
+    # # At this point, raw data have been fetched for every trending movie
+    #
+    # # For every movie, remove duplicates from the raw data
+    # print('Removing duplicates')
+    # remove_duplicate_tweets(movies)
+    #
+    # # Perform sentiment analysis of all tweets of every movie
+    # print('Calculating sentiment')
+    # calculate_sentiment(movies)
 
     global ITERATION_COUNT
     ITERATION_COUNT += 1
@@ -88,7 +88,7 @@ def backend_iteration():
 if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=backend_iteration,
-                      trigger="interval", minutes=3500)
+                      trigger="interval", hours=24)
     scheduler.start()
     # backend_iteration()
 

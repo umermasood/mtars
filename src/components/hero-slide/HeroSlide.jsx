@@ -102,7 +102,7 @@ const HeroSlideItem = (props) => {
               MTARS Rating
             </Button>
             {/*             <OutlineButton onClick={setModalActive}> */}
-            <OutlineButton>Add To Wishlist</OutlineButton>
+            {/*<OutlineButton>Add To Wishlist</OutlineButton>*/}
           </div>
         </div>
         <div className='hero-slide__item__content__poster'>

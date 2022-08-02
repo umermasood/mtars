@@ -15,12 +15,14 @@ const Routes = () => {
         <AuthProvider>
             <Switch>
 
-                <ProtectedRoute path='/:category/:id' component={Detail} />
+                <ProtectedRoute exact path='/:category/:id' component={Detail} />
                 <Route
+
                     path='/auth'
                     component={Auth}
                 />
                 <Route
+                    exact
                     path='/:category/search/:keyword'
                     component={Catalog}
                 />
@@ -29,6 +31,7 @@ const Routes = () => {
                     component={Detail}
                 /> */}
                 <Route
+                    exact
                     path='/:category'
                     component={Catalog}
                 />

@@ -6,12 +6,16 @@ import Home from '../pages/Home';
 import Auth from '../pages/Auth'
 import Catalog from '../pages/Catalog';
 import Detail from '../pages/detail/Detail';
-import {AuthProvider} from "./AuthContext";
+import { AuthProvider } from "./AuthContext";
+import ProtectedRoute from './ProtectedRoutes';
+
 
 const Routes = () => {
     return (
         <AuthProvider>
             <Switch>
+
+                <ProtectedRoute path='/:category/:id' component={Detail} />
                 <Route
                     path='/auth'
                     component={Auth}
@@ -20,10 +24,10 @@ const Routes = () => {
                     path='/:category/search/:keyword'
                     component={Catalog}
                 />
-                <Route
+                {/* <Route
                     path='/:category/:id'
                     component={Detail}
-                />
+                /> */}
                 <Route
                     path='/:category'
                     component={Catalog}
